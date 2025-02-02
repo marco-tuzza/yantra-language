@@ -20,7 +20,8 @@ class AdminSeeder extends Seeder
         if ($username && $password) {
             User::updateOrCreate([
                 'username' => $username,
-                'password' => Hash::make($password)
+                'password' => Hash::make($password),
+                'role' => 'admin'
             ]);
         } else {
             $this->command->info('ADMIN_EMAIL or ADMIN_PASSWORD are not set in .env file.');
