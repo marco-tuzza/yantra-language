@@ -52,6 +52,6 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        return redirect()->route('settings')->with('success', 'User created successfully  with password: '.$password);
+        return redirect()->route('admin.settings')->with('success', 'User created successfully  with password: '.$password);
     }
 }

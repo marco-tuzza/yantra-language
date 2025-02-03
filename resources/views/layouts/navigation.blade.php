@@ -43,7 +43,7 @@
                         </x-dropdown-link>
 
                         @admin
-                            <x-dropdown-link :href="route('settings')">
+                            <x-dropdown-link :href="route('admin.settings')">
                                 {{ __('Admin Settings') }}
                             </x-dropdown-link>
                         @endadmin
@@ -98,7 +98,7 @@
                 </x-responsive-nav-link>
 
                 @admin
-                    <x-responsive-nav-link :href="route('settings')">
+                    <x-responsive-nav-link :href="route('admin.settings')">
                         {{ __('Admin Settings') }}
                     </x-responsive-nav-link>
                 @endadmin
