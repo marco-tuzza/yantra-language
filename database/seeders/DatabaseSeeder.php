@@ -18,5 +18,9 @@ class DatabaseSeeder extends Seeder
             'username' => 'Pippo',
             'password' => 'password',
         ]);
+
+        $this->call([
+            AdminSeeder::class
+        ]);
     }
 }

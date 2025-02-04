@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 // Keep guest registration routes for public registration
@@ -46,4 +47,6 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 
     Route::post('admin/register', [RegisteredUserController::class, 'store'])->name('admin.register');
+
+    Route::post('admin/add-language', [AdminController::class, 'addLanguage'])->name('admin.add-language');
 });

@@ -5,4 +5,5 @@
         </h2>
     </x-slot>
     @include('admin.partials.register-user-form')
+    @include('admin.partials.add-language-form')
 </x-app-layout>

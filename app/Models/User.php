@@ -42,4 +42,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
+    }
 }

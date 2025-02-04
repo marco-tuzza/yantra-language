@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class RegisteredUserController extends Controller
 {
@@ -30,20 +31,25 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if(!Auth::user()->role == 'admin') {
-            return abort(403);
+        if (Auth::user()->role !== 'admin') {
+            abort(403);
         }
 
         $password = Str::random(20);
-
         $request->merge([
             'password' => $password,
         ]);
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'password' => ['required', Rules\Password::defaults()],
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator, 'register')
+                ->withInput();
+        }
 
         $user = User::create([
             'username' => $request->username,
@@ -52,6 +58,7 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        return redirect()->route('admin.settings')->with('success', 'User created successfully  with password: '.$password);
+        return redirect()->route('admin.settings')
+            ->with('register-success', 'User created successfully with password: '.$password);
     }
 }

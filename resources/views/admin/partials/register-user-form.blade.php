@@ -2,18 +2,9 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
             <div class="max-w-xl">
-                @if (session('success'))
+                @if (session('register-success'))
                     <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                @if ($errors->any())
-                    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                        {{ session('register-success') }}
                     </div>
                 @endif
 
@@ -38,10 +29,10 @@
                         </div>
 
                         <div>
-                            <x-input-label for="flag" :value="__('Flag')" />
-                            <x-select-input :options="['1' => 'Option 1', '2' => 'Option 2']" id="flag" name="flag"
+                            <x-input-label for="language" :value="__('Language')" />
+                            <x-select-input :options="['1' => 'Option 1', '2' => 'Option 2']" id="language" name="language"
                                 class="mt-1 block w-full" />
-                            <x-input-error :messages="$errors->register->get('flag')" class="mt-2" />
+                            <x-input-error :messages="$errors->register->get('language')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center gap-4">
