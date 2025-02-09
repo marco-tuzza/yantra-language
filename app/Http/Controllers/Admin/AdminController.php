@@ -48,8 +48,8 @@ class AdminController extends Controller
         }
 
         $language = new Language();
-        $language->name = $request->name;
-        $language->code = $request->code;
+        $language->name = ucfirst($request->name);
+        $language->code = strtolower($request->code);
         $language->save();
 
         return redirect()->route('admin.settings')->with('language-success', 'New language added');
