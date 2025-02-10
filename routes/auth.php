@@ -49,4 +49,6 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/register', [RegisteredUserController::class, 'store'])->name('admin.register');
 
     Route::post('admin/add-language', [AdminController::class, 'addLanguage'])->name('admin.add-language');
+
+    Route::delete('admin/delete-language/{id}', [AdminController::class, 'deleteLanguage'])->name('admin.delete-language');
 });

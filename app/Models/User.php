@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -43,8 +44,11 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return HasMany
+     */
     public function language()
     {
-        return $this->belongsTo(Language::class);
+        return $this->hasMany(Language::class);
     }
 }

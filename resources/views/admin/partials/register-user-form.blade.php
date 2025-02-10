@@ -30,8 +30,7 @@
 
                         <div>
                             <x-input-label for="language" :value="__('Language')" />
-                            <x-select-input :options="['1' => 'Option 1', '2' => 'Option 2']" id="language" name="language"
-                                class="mt-1 block w-full" />
+                            <x-select-input :options="$languages->pluck('name', 'id')" id="language" name="language" class="mt-1 block w-full" />
                             <x-input-error :messages="$errors->register->get('language')" class="mt-2" />
                         </div>
 

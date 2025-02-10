@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -21,14 +22,16 @@ class AdminController extends Controller
         if($role !== 'admin') {
             return abort(403);
         } else {
-            return view('admin.settings');
+            $languages = $this->getLanguages();
+            return view('admin.settings')->with('languages', $languages);
         }
     }
 
     /**
      * Add a new language
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function addLanguage(Request $request)
     {
@@ -52,7 +55,41 @@ class AdminController extends Controller
         $language->code = strtolower($request->code);
         $language->save();
 
-        return redirect()->route('admin.settings')->with('language-success', 'New language added');
+        return redirect()->route('admin.settings')->with('language-add-success', 'New language added');
+    }
+
+    /**
+     * Retrieve all languages
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getLanguages() {
+        return Language::all();
+    }
+
+    /**
+     * Delete a language
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function deleteLanguage(Request $request): RedirectResponse
+    {
+        if (Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $id = $request->route('id');
+
+        $language = Language::find($id);
+
+        if ($language) {
+            Language::destroy($id);
+        } else {
+            return redirect()->route('admin.settings')->with('language-delete-error', 'Language not found');
+        }
+
+        return redirect()->route('admin.settings')->with('language-delete-success', 'Language deleted successfully');
     }
 
 }

@@ -2,17 +2,17 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
             <div class="max-w-xl">
-                @if (session('language-success'))
+                @if (session('language-add-success'))
                     <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
-                        {{ session('language-success') }}
+                        {{ session('language-add-success') }}
                     </div>
                 @endif
 
                 <section>
                     <header>
-                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                        <h3 class="text-md font-medium text-gray-900 dark:text-gray-100">
                             {{ __('Add a new language') }}
-                        </h2>
+                        </h3>
                     </header>
 
                     <form method="post" action="{{ route('admin.add-language') }}" class="mt-6 space-y-6">
