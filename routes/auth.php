@@ -1,18 +1,15 @@
 <?php
 
+use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
-// Keep guest registration routes for public registration
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
@@ -48,7 +45,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('admin/register', [RegisteredUserController::class, 'store'])->name('admin.register');
 
-    Route::post('admin/add-language', [AdminController::class, 'addLanguage'])->name('admin.add-language');
+    Route::post('admin/add-language', [LanguageController::class, 'addLanguage'])->name('admin.add-language');
 
-    Route::delete('admin/delete-language/{id}', [AdminController::class, 'deleteLanguage'])->name('admin.delete-language');
+    Route::delete('admin/delete-language/{id}', [LanguageController::class, 'deleteLanguage'])->name('admin.delete-language');
+
+    Route::delete('admin/delete-user/{id}', [UserController::class, 'deleteUser'])->name('admin.delete-user');
 });

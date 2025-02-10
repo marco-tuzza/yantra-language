@@ -4,6 +4,6 @@
             {{ __('Admin Settings') }}
         </h2>
     </x-slot>
-    @include('admin.partials.register-user-form')
-    @include('admin.partials.language-section')
+    @include('admin.partials.user-section')
+    @include('admin.partials.languages-section')
 </x-app-layout>
