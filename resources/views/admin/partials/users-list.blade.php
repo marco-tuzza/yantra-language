@@ -10,7 +10,7 @@
                 <span class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $user->username }}</span>
             </div>
             <div class="flex items-center gap-4">
-                <a href="/" class="text-blue-500 hover:text-blue-700">{{ __('Edit') }}</a>
+                <a href="{{ route('admin.edit-user', ['id' => $user->id]) }}" class="text-blue-500 hover:text-blue-700">{{ __('Edit') }}</a>
                 <form method="post" action="{{ route('admin.delete-user', ['id' => $user->id]) }}">
                     @csrf
                     @method('delete')

@@ -20,6 +20,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
+
+    Route::get('admin/edit-user/{id}', [AdminController::class, 'editUser'])->name('admin.edit-user');
 });
 
 require __DIR__.'/auth.php';

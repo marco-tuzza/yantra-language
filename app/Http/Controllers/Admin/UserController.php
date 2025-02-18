@@ -22,6 +22,17 @@ class UserController extends Controller
     }
 
     /**
+     * Retrieve a specific user
+     *
+     * @param int $id
+     * @return User
+     */
+    public function getUser(int $id): User
+    {
+        return User::find($id);
+    }
+
+    /**
      * Delete a user
      *
      * @param Request $request
@@ -44,5 +55,30 @@ class UserController extends Controller
         }
 
         return redirect()->route('admin.settings')->with('user-delete-success', 'User deleted successfully');
+    }
+
+    /**
+     * Update a user
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateUser(Request $request): RedirectResponse
+    {
+        if (Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $id = $request->route('id');
+
+        $user = User::find($id);
+
+        if ($user) {
+            $user->update($request->all());
+        } else {
+            return redirect()->route('admin.settings')->with('user-update-error', 'User not found');
+        }
+
+        return redirect()->route('admin.settings')->with('user-update-success', 'User updated successfully');
     }
 }

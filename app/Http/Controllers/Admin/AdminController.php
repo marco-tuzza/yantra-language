@@ -26,4 +26,21 @@ class AdminController extends Controller
             return view('admin.settings')->with('languages', $languages)->with('users', $users);
         }
     }
+
+    /**
+     * @param int $id
+     * @return Factory|Application|View
+     */
+    public function editUser(int $id): Factory|Application|View
+    {
+        $role = Auth::user()->role;
+
+        if($role !== 'admin') {
+            return abort(403);
+        } else {
+            $user = (new UserController)->getUser($id);
+
+            return view('admin.edit-user')->with('user', $user);
+        }
     }
+}
