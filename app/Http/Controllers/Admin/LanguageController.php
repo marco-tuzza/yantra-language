@@ -70,6 +70,8 @@ class LanguageController extends Controller
         $language = Language::find($id);
 
         if ($language) {
+            $languageUsers = $language->users;
+            $language->users()->detach($languageUsers);
             Language::destroy($id);
         } else {
             return redirect()->route('admin.settings')->with('language-delete-error', 'Language not found');

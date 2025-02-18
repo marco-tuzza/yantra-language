@@ -48,13 +48,12 @@ class UserController extends Controller
         $user = User::find($id);
 
         if ($user) {
+            $userLanguages = $user->languages;
+            $user->languages()->detach($userLanguages);
             User::destroy($id);
         } else {
             return redirect()->route('admin.settings')->with('user-delete-error', 'User not found');
         }
-
-        $userLanguages = $user->languages;
-        $user->languages()->detach($userLanguages);
 
         return redirect()->route('admin.settings')->with('user-delete-success', 'User deleted successfully');
     }
