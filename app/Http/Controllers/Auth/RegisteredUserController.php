@@ -43,6 +43,7 @@ class RegisteredUserController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'password' => ['required', Rules\Password::defaults()],
+            'language' => ['exists:languages,id']
         ]);
 
         if ($validator->fails()) {
@@ -57,6 +58,7 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        $user->languages()->sync($request->language);
 
         return redirect()->route('admin.settings')
             ->with('register-success', 'User created successfully with password: '.$password);

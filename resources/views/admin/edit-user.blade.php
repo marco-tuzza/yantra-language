@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edit user: ') }} {{ $user->username }}
+            {{ __('Editing user: ') }} {{ $user->username }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -20,7 +20,7 @@
                                 @method('put')
                                 <div class="mb-4">
                                     <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-200">{{ __('Username') }}</label>
-                                    <input type="text" name="username" id="username" value="{{ $user->username }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 dark:text-gray-100">
+                                    <input type="text" name="username" id="username" value="{{ $user->username }}" placeholder="{{ $user->username }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 dark:text-gray-100">
                                 </div>
                                 <div class="flex flex-wrap w-2/3">
                                     @foreach($languages as $language)

@@ -8,6 +8,11 @@
         <div class="flex items-center justify-between border-solid border-2 border-gray-300 dark:border-gray-700 p-2 my-2 dark:bg-gray-900">
             <div class="flex items-center gap-4">
                 <span class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $user->username }}</span>
+                <span class="text-sm text-gray-500 dark:text-gray-400">
+                    @if($user->languages->isNotEmpty())
+                        {{ $user->languages->pluck('code')->implode(' | ') }}
+                    @endif
+                </span>
             </div>
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.edit-user', ['id' => $user->id]) }}" class="text-blue-500 hover:text-blue-700">{{ __('Edit') }}</a>
