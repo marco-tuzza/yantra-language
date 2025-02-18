@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -45,10 +46,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function language()
+    public function languages(): BelongsToMany
     {
-        return $this->belongsToMany(Language::class);
+        return $this->belongsToMany(Language::class, 'users_languages')->withTimestamps();
     }
 }

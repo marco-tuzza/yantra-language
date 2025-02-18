@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Language extends Model
 {
@@ -15,14 +16,16 @@ class Language extends Model
 
     /**
      * The table associated with the model.
+     *
+     * @var string
      */
     protected $table = 'languages';
 
     /**
-     * Get the users for the language.
+     * @return BelongsToMany
      */
-    public function users()
+    public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'users_languages')->withTimestamps();
     }
 }

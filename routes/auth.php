@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('admin/register', [RegisteredUserController::class, 'store'])->name('admin.register');
 
-    Route::post('admin/update-user/{id}', [UserController::class, 'updateUser'])->name('admin.update-user');
+    Route::put('admin/update-user/{id}', [UserController::class, 'updateUser'])->name('admin.update-user');
 
     Route::post('admin/add-language', [LanguageController::class, 'addLanguage'])->name('admin.add-language');
 

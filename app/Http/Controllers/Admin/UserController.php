@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function getUser(int $id): User
     {
-        return User::find($id);
+        return User::with('languages')->findOrFail($id);
     }
 
     /**
@@ -45,7 +45,6 @@ class UserController extends Controller
         }
 
         $id = $request->route('id');
-
         $user = User::find($id);
 
         if ($user) {
@@ -54,11 +53,14 @@ class UserController extends Controller
             return redirect()->route('admin.settings')->with('user-delete-error', 'User not found');
         }
 
+        $userLanguages = $user->languages;
+        $user->languages()->detach($userLanguages);
+
         return redirect()->route('admin.settings')->with('user-delete-success', 'User deleted successfully');
     }
 
     /**
-     * Update a user
+     * Update username and languages for a user
      *
      * @param Request $request
      * @return RedirectResponse
@@ -70,15 +72,21 @@ class UserController extends Controller
         }
 
         $id = $request->route('id');
-
         $user = User::find($id);
 
-        if ($user) {
-            $user->update($request->all());
-        } else {
-            return redirect()->route('admin.settings')->with('user-update-error', 'User not found');
+        if (!$user) {
+            return redirect()->route('admin.edit-user', $id)->with('user-update-error', 'User not found');
         }
 
-        return redirect()->route('admin.settings')->with('user-update-success', 'User updated successfully');
+        $validatedData = $request->validate([
+            'languages' => ['array'],
+            'languages.*' => ['exists:languages,id'],
+        ]);
+
+        $user->update($request->except('languages'));
+        $user->languages()->sync($validatedData['languages']);
+
+        return redirect()->route('admin.edit-user', $id)->with('user-update-success', 'User updated successfully');
     }
+
 }

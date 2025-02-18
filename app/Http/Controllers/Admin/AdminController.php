@@ -35,12 +35,14 @@ class AdminController extends Controller
     {
         $role = Auth::user()->role;
 
-        if($role !== 'admin') {
+        if ($role !== 'admin') {
             return abort(403);
         } else {
             $user = (new UserController)->getUser($id);
+            $languages = (new LanguageController)->getLanguages();
+            $userLanguages = $user->languages->pluck('id')->toArray();
 
-            return view('admin.edit-user')->with('user', $user);
+            return view('admin.edit-user')->with('user', $user)->with('languages', $languages)->with('userLanguages', $userLanguages);
         }
     }
 }
