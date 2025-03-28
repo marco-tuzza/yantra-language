@@ -2,8 +2,15 @@
     <div class="max-w-7xl mx-auto space-y-6">
         <div class="max-w-xl">
             @if (session('register-success'))
-                <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
-                    {{ session('register-success') }}
+                <div class="mb-4 p-4 bg-green-200 text-green-700 rounded flex items-center justify-between">
+                    <div>
+                        {{ session('register-success') }}
+                    </div>
+                    <button type="button" 
+                            data-copy-password
+                            class="ml-4 px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                        {{ __('Copy to clipboard') }}
+                    </button>
                 </div>
             @endif
 
@@ -41,3 +48,24 @@
         </div>
     </div>
 </div>
+
+@if (session('register-success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const copyButton = document.querySelector('[data-copy-password]');
+        if (copyButton) {
+            copyButton.addEventListener('click', function() {
+                const message = "{{ session('register-success') }}";
+                const password = message.match(/password: (.*)/i)[1];
+                navigator.clipboard.writeText(password).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = "{{ __('Copied!') }}";
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                    }, 2000);
+                });
+            });
+        }
+    });
+</script>
+@endif

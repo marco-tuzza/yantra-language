@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function getUser(int $id): User
     {
-        return User::with('languages')->findOrFail($id);
+        return User::find($id);
     }
 
     /**
@@ -55,7 +55,7 @@ class UserController extends Controller
             return redirect()->route('admin.settings')->with('user-delete-error', 'User not found');
         }
 
-        return redirect()->route('admin.settings')->with('user-delete-success', 'User deleted successfully');
+        return redirect()->route('admin.settings')->with('user-delete-success', 'User ' . $user->username . ' deleted successfully');
     }
 
     /**
@@ -85,7 +85,7 @@ class UserController extends Controller
         $user->update($request->except('languages'));
         $user->languages()->sync($validatedData['languages']);
 
-        return redirect()->route('admin.edit-user', $id)->with('user-update-success', 'User updated successfully');
+        return redirect()->route('admin.settings')->with('user-update-success', 'User ' . $user->username . ' updated successfully');
     }
 
 }

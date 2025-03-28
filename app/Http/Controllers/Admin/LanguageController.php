@@ -19,7 +19,7 @@ class LanguageController extends Controller
      */
     public function getLanguages(): Collection
     {
-        return Language::all();
+        return Language::orderBy('name', 'ASC')->get();
     }
 
     /**
