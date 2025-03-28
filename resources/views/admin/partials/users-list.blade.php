@@ -44,7 +44,7 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        const successMessage = document.querySelector('.bg-green-100');
+        const successMessage = document.querySelector('.bg-green-100:not([data-register-success])');
         if (successMessage) {
             setTimeout(function () {
                 successMessage.style.transition = 'opacity 1s';

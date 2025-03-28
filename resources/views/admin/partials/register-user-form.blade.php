@@ -2,14 +2,15 @@
     <div class="max-w-7xl mx-auto space-y-6">
         <div class="max-w-xl">
             @if (session('register-success'))
-                <div class="mb-4 p-4 bg-green-200 text-green-700 rounded flex items-center justify-between">
+                <div class="mb-4 p-4 bg-green-100 text-green-700 rounded flex items-center justify-between" 
+                     data-register-success>
                     <div>
                         {{ session('register-success') }}
                     </div>
                     <button type="button" 
                             data-copy-password
-                            class="ml-4 px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                        {{ __('Copy to clipboard') }}
+                            class="ml-4 px-3 py-1 text-sm bg-green-500 text-white rounded-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200 w-32 text-center whitespace-nowrap overflow-hidden text-ellipsis min-h-[2.5rem]">
+                        {{ __('Copy') }}
                     </button>
                 </div>
             @endif
@@ -53,6 +54,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const copyButton = document.querySelector('[data-copy-password]');
+        const successMessage = copyButton.closest('.bg-green-100');
+        
         if (copyButton) {
             copyButton.addEventListener('click', function() {
                 const message = "{{ session('register-success') }}";
@@ -60,8 +63,14 @@
                 navigator.clipboard.writeText(password).then(() => {
                     const originalText = this.textContent;
                     this.textContent = "{{ __('Copied!') }}";
+                    
                     setTimeout(() => {
                         this.textContent = originalText;
+                        if (successMessage) {
+                            successMessage.style.transition = 'opacity 1s';
+                            successMessage.style.opacity = '0';
+                            setTimeout(() => successMessage.remove(), 1000);
+                        }
                     }, 2000);
                 });
             });
