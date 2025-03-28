@@ -50,7 +50,7 @@ class LanguageController extends Controller
         $language->code = strtolower($request->code);
         $language->save();
 
-        return redirect()->route('admin.settings')->with('language-add-success', 'New language added');
+        return redirect()->route('admin.settings', ['section' => 'languages'])->with('language-add-success', 'New language added');
     }
 
     /**
@@ -74,9 +74,9 @@ class LanguageController extends Controller
             $language->users()->detach($languageUsers);
             Language::destroy($id);
         } else {
-            return redirect()->route('admin.settings')->with('language-delete-error', 'Language not found');
+            return redirect()->route('admin.settings', ['section' => 'languages'])->with('language-delete-error', 'Language not found');
         }
 
-        return redirect()->route('admin.settings')->with('language-delete-success', 'Language deleted successfully');
+        return redirect()->route('admin.settings', ['section' => 'languages'])->with('language-delete-success', 'Language deleted successfully');
     }
 }

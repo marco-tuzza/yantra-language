@@ -21,3 +21,17 @@
         </div>
     @endforeach
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('form[action*="delete-language"]');
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const isConfirmed = confirm('Are you sure you want to delete this language?');
+                if (isConfirmed) {
+                    event.target.submit();
+                }
+            });
+        });
+    });
+</script>
